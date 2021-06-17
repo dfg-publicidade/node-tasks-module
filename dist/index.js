@@ -18,8 +18,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RunnerError = exports.Runner = void 0;
+exports.DefaultTaskManager = exports.RunnerError = exports.Runner = void 0;
 const runner_1 = __importStar(require("./tasks/runner"));
 exports.Runner = runner_1.default;
 Object.defineProperty(exports, "RunnerError", { enumerable: true, get: function () { return runner_1.RunnerError; } });
+const taskManager_1 = __importDefault(require("./tasks/taskManager"));
+exports.DefaultTaskManager = taskManager_1.default;

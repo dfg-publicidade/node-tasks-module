@@ -1,2 +1,3 @@
 import Runner, { RunnerError } from './tasks/runner';
-export { Runner, RunnerError };
+import DefaultTaskManager from './tasks/taskManager';
+export { Runner, RunnerError, DefaultTaskManager };
