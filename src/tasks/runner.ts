@@ -16,7 +16,7 @@ class Runner {
         if (task === undefined || taskManager.getMethod(task) === undefined || taskManager.getStatus(task) === undefined) {
             return Promise.reject(RunnerError.INCOMPLETE_TASK);
         }
-        else if (taskManager.isRunning(task)) {
+        else if (!taskManager.isRunning(task)) {
             return Promise.reject(RunnerError.WRONG_START_STATUS);
         }
         else if (taskManager.getMethod(task).indexOf('.') === -1) {
