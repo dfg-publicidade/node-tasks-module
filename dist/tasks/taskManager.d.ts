@@ -19,5 +19,7 @@ declare abstract class DefaultTaskManager {
     abstract getStatus(task?: any): string;
     abstract isRunning(task?: any): boolean;
     abstract getParameters(task?: any): any;
+    abstract getInterval(task?: any): number;
+    abstract isPersistent(task?: any): boolean;
 }
 export default DefaultTaskManager;
