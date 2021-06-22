@@ -10,7 +10,8 @@ abstract class DefaultTaskManager {
     public abstract sendToSolved(task: Task): Promise<void>;
     public abstract delete(task: Task): Promise<void>;
     public abstract cloneTask(task: Task): Promise<Task>;
-
+    public abstract afterTask(result: any): Promise<void>;
+    public abstract afterCron(result: any): Promise<void>;
 }
 
 export default DefaultTaskManager;
