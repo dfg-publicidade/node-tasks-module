@@ -4,7 +4,12 @@ declare abstract class DefaultTaskManager {
     abstract cancelRunningTasks(): Promise<void>;
     abstract generateDefaultTasks(): Promise<void>;
     abstract getNext(): Promise<Task>;
-    abstract update(task: Task, data: any): Promise<Task>;
+    abstract update(task: Task, data: {
+        status: string;
+        error: any;
+        endDate: Date;
+        result: any;
+    }): Promise<Task>;
     abstract sendToSolved(task: Task): Promise<Task>;
     abstract delete(task: Task): Promise<void>;
     abstract cloneTask(task: Task): Promise<Task>;
