@@ -3,6 +3,7 @@ import Task from '../interfaces/task';
 /* Module */
 abstract class DefaultTaskManager {
     public abstract init(): Promise<void>;
+    public abstract load(moduleName: string): Promise<any>;
     public abstract cancelRunningTasks(): Promise<void>;
     public abstract generateDefaultTasks(): Promise<void>;
     public abstract getNext(): Promise<Task>;

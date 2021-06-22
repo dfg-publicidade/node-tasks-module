@@ -11,7 +11,8 @@
         "test:all": "DEBUG=module:* npm run test test/**/*.spec.ts test/**/**/*.spec.ts test/**/**/**/*.spec.ts"
     },
     "dependencies": {
-        "@dfgpublicidade/node-app-module": "git+ssh://git@github.com/dfg-publicidade/node-app-module.git"
+        "@dfgpublicidade/node-app-module": "git+ssh://git@github.com/dfg-publicidade/node-app-module.git",
+        "@dfgpublicidade/node-files-module": "git+https://github.com/dfg-publicidade/node-files-module.git"
     },
     "devDependencies": {
         "@dfgpublicidade/eslint-config": "git+ssh://git@github.com/dfg-publicidade/eslint-config.git",

@@ -1,5 +1,4 @@
 import App from '@dfgpublicidade/node-app-module';
-import appRoot from 'app-root-path';
 import Task from '../interfaces/task';
 import DefaultTaskManager from './taskManager';
 
@@ -30,7 +29,7 @@ class Runner {
             const method: string = action[1];
 
             try {
-                let module: any = await import(`${appRoot}/modules/${moduleName}`);
+                let module: any = await taskManager.load(`modules/${moduleName}`);
 
                 module = module.default;
 

@@ -1,6 +1,7 @@
 import Task from '../interfaces/task';
 declare abstract class DefaultTaskManager {
     abstract init(): Promise<void>;
+    abstract load(moduleName: string): Promise<any>;
     abstract cancelRunningTasks(): Promise<void>;
     abstract generateDefaultTasks(): Promise<void>;
     abstract getNext(): Promise<Task>;
