@@ -8,7 +8,7 @@ declare abstract class DefaultTaskManager {
     abstract sendToSolved(task: Task): Promise<void>;
     abstract delete(task: Task): Promise<void>;
     abstract cloneTask(task: Task): Promise<Task>;
-    abstract afterTask(result: any): Promise<void>;
-    abstract afterCron(result: any): Promise<void>;
+    abstract afterTask(result?: any): Promise<void>;
+    abstract afterCron(result?: any): Promise<void>;
 }
 export default DefaultTaskManager;
