@@ -18,8 +18,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RunnerError = void 0;
+const app_root_path_1 = __importDefault(require("app-root-path"));
 /* Module */
 var RunnerError;
 (function (RunnerError) {
@@ -46,7 +50,7 @@ class Runner {
             const moduleName = action[0];
             const method = action[1];
             try {
-                let module = await Promise.resolve().then(() => __importStar(require(`./modules/${moduleName}`)));
+                let module = await Promise.resolve().then(() => __importStar(require(`${app_root_path_1.default}/modules/${moduleName}`)));
                 module = module.default;
                 if (!module[method] || !(module[method] instanceof Function)) {
                     return Promise.reject(RunnerError.UNEXISTENT_METHOD);
