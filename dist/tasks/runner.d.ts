@@ -1,5 +1,6 @@
 import App from '@dfgpublicidade/node-app-module';
 import Task from '../interfaces/task';
+import DefaultTaskManager from './taskManager';
 declare enum RunnerError {
     INCOMPLETE_TASK = "The task has incomplete data to be executed.",
     WRONG_START_STATUS = "The task has not been properly executed by the system (wrong status).",
@@ -8,7 +9,7 @@ declare enum RunnerError {
     MODULE_NOT_FOUND = "The module called at the task was not found."
 }
 declare class Runner {
-    run(app: App, task: Task): Promise<any>;
+    run(app: App, taskManager: DefaultTaskManager, task: Task): Promise<any>;
 }
 export default Runner;
 export { RunnerError };

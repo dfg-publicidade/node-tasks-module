@@ -31,18 +31,18 @@ var RunnerError;
 })(RunnerError || (RunnerError = {}));
 exports.RunnerError = RunnerError;
 class Runner {
-    async run(app, task) {
-        if (task === undefined || task.getMethod() === undefined || task.getStatus() === undefined) {
+    async run(app, taskManager, task) {
+        if (task === undefined || taskManager.getMethod(task) === undefined || taskManager.getStatus(task) === undefined) {
             return Promise.reject(RunnerError.INCOMPLETE_TASK);
         }
-        else if (task.isRunning()) {
+        else if (taskManager.isRunning(task)) {
             return Promise.reject(RunnerError.WRONG_START_STATUS);
         }
-        else if (task.getMethod().indexOf('.') === -1) {
+        else if (taskManager.getMethod(task).indexOf('.') === -1) {
             return Promise.reject(RunnerError.MISCONFIGURED_METHOD);
         }
         else {
-            const action = task.getMethod().split('.');
+            const action = taskManager.getMethod(task).split('.');
             const moduleName = action[0];
             const method = action[1];
             try {
@@ -53,7 +53,7 @@ class Runner {
                 }
                 else {
                     try {
-                        return module[method](app, task.getParameters());
+                        return module[method](app, taskManager.getParameters(task));
                     }
                     catch (error) {
                         return Promise.reject(error);

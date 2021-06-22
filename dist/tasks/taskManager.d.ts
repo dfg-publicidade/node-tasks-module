@@ -15,5 +15,9 @@ declare abstract class DefaultTaskManager {
     abstract cloneTask(task: Task): Promise<Task>;
     abstract afterTask(result?: any): Promise<void>;
     abstract afterCron(result?: any): Promise<void>;
+    abstract getMethod(task?: any): string;
+    abstract getStatus(task?: any): string;
+    abstract isRunning(task?: any): boolean;
+    abstract getParameters(task?: any): any;
 }
 export default DefaultTaskManager;

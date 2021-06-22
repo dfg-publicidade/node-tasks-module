@@ -1,5 +1,6 @@
 import App from '@dfgpublicidade/node-app-module';
 import Task from '../interfaces/task';
+import DefaultTaskManager from './taskManager';
 
 /* Module */
 enum RunnerError {
@@ -11,18 +12,18 @@ enum RunnerError {
 }
 
 class Runner {
-    public async run(app: App, task: Task): Promise<any> {
-        if (task === undefined || task.getMethod() === undefined || task.getStatus() === undefined) {
+    public async run(app: App, taskManager: DefaultTaskManager, task: Task): Promise<any> {
+        if (task === undefined || taskManager.getMethod(task) === undefined || taskManager.getStatus(task) === undefined) {
             return Promise.reject(RunnerError.INCOMPLETE_TASK);
         }
-        else if (task.isRunning()) {
+        else if (taskManager.isRunning(task)) {
             return Promise.reject(RunnerError.WRONG_START_STATUS);
         }
-        else if (task.getMethod().indexOf('.') === -1) {
+        else if (taskManager.getMethod(task).indexOf('.') === -1) {
             return Promise.reject(RunnerError.MISCONFIGURED_METHOD);
         }
         else {
-            const action: string[] = task.getMethod().split('.');
+            const action: string[] = taskManager.getMethod(task).split('.');
 
             const moduleName: string = action[0];
             const method: string = action[1];
@@ -37,7 +38,7 @@ class Runner {
                 }
                 else {
                     try {
-                        return module[method](app, task.getParameters());
+                        return module[method](app, taskManager.getParameters(task));
                     }
                     catch (error) {
                         return Promise.reject(error);
