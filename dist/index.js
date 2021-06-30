@@ -22,7 +22,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RunnerError = exports.Runner = exports.DefaultTaskManager = void 0;
+exports.TaskServer = exports.RunnerError = exports.Runner = exports.DefaultTaskManager = void 0;
+const taskServer_1 = __importDefault(require("./server/taskServer"));
+exports.TaskServer = taskServer_1.default;
 const runner_1 = __importStar(require("./tasks/runner"));
 exports.Runner = runner_1.default;
 Object.defineProperty(exports, "RunnerError", { enumerable: true, get: function () { return runner_1.RunnerError; } });
