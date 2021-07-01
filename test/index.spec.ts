@@ -2,12 +2,12 @@ import App, { AppInfo } from '@dfgpublicidade/node-app-module';
 import Util from '@dfgpublicidade/node-util-module';
 import { expect } from 'chai';
 import { before, describe, it } from 'mocha';
-import { DefaultTaskManager, RunnerError, Task as ITask, TaskServer } from '../src';
+import { DefaultTaskManager, RunnerError, Task, TaskServer } from '../src';
 
 /* Tests */
 let taskResult: any;
 
-class Task implements ITask {
+class TestTask implements Task {
     public id: number;
     public method: string;
     public status: string;
@@ -19,8 +19,8 @@ class Task implements ITask {
     public result?: any;
 }
 
-let tasks: Task[] = [];
-const solvedTasks: Task[] = [];
+let tasks: TestTask[] = [];
+const solvedTasks: TestTask[] = [];
 
 const taskModule: any = {
     default: {
@@ -113,23 +113,23 @@ class TaskManager extends DefaultTaskManager {
         return Promise.resolve();
     }
 
-    public async getNext(): Promise<Task> {
+    public async getNext(): Promise<TestTask> {
         if (tasks.length === 0) {
             return Promise.resolve(undefined);
         }
 
-        const task: Task = tasks[0];
+        const task: TestTask = tasks[0];
         task.status = 'RUNNING';
 
         return Promise.resolve(task);
     }
 
-    public async update(task: Task, data: {
+    public async update(task: TestTask, data: {
         status: string;
         error: any;
         endDate: Date;
         result: any;
-    }): Promise<Task> {
+    }): Promise<TestTask> {
         task.status = data.status;
         task.error = data.error;
         task.endDate = data.endDate;
@@ -138,19 +138,19 @@ class TaskManager extends DefaultTaskManager {
         return task;
     }
 
-    public async sendToSolved(task: Task): Promise<Task> {
+    public async sendToSolved(task: TestTask): Promise<TestTask> {
         solvedTasks.push(task);
 
         return Promise.resolve(task);
     }
 
-    public async delete(task: Task): Promise<void> {
-        tasks = tasks.filter((taskAt: Task): boolean => taskAt.id !== task.id);
+    public async delete(task: TestTask): Promise<void> {
+        tasks = tasks.filter((taskAt: TestTask): boolean => taskAt.id !== task.id);
 
         return Promise.resolve();
     }
 
-    public async cloneTask(task: Task): Promise<Task> {
+    public async cloneTask(task: TestTask): Promise<TestTask> {
         return Promise.resolve({
             ...task,
             status: 'NEW',
@@ -169,27 +169,27 @@ class TaskManager extends DefaultTaskManager {
         return Promise.resolve(result);
     }
 
-    public getMethod(task: Task): string {
+    public getMethod(task: TestTask): string {
         return task.method;
     }
 
-    public getStatus(task: Task): string {
+    public getStatus(task: TestTask): string {
         return task.status;
     }
 
-    public isRunning(task: Task): boolean {
+    public isRunning(task: TestTask): boolean {
         return task.status === 'RUNNING';
     }
 
-    public getParameters(task: Task): any {
+    public getParameters(task: TestTask): any {
         return task.parameters;
     }
 
-    public getInterval(task: Task): number {
+    public getInterval(task: TestTask): number {
         return task.interval;
     }
 
-    public isPersistent(task: Task): boolean {
+    public isPersistent(task: TestTask): boolean {
         return task.persistIfFail;
     }
 }
@@ -268,7 +268,7 @@ describe('TaskServer.ts', (): void => {
         });
 
         const taskManager3: TaskManager = new TaskManager();
-        taskManager3.getNext = async (): Promise<Task> => {
+        taskManager3.getNext = async (): Promise<TestTask> => {
             throw new Error('Error');
         };
 
@@ -301,7 +301,7 @@ describe('TaskServer.ts', (): void => {
         });
 
         taskManager5 = new TaskManager();
-        taskManager5.sendToSolved = async (): Promise<Task> => {
+        taskManager5.sendToSolved = async (): Promise<TestTask> => {
             throw new Error('Error');
         };
 
@@ -319,7 +319,7 @@ describe('TaskServer.ts', (): void => {
         });
 
         taskManager6 = new TaskManager();
-        taskManager6.cloneTask = async (): Promise<Task> => {
+        taskManager6.cloneTask = async (): Promise<TestTask> => {
             throw new Error('Error');
         };
 
@@ -351,7 +351,7 @@ describe('TaskServer.ts', (): void => {
         });
 
         taskManager8 = new TaskManager();
-        taskManager8.getNext = async (): Promise<Task> => Promise.resolve(tasks[0]);
+        taskManager8.getNext = async (): Promise<TestTask> => Promise.resolve(tasks[0]);
         taskServer8 = new TaskServer(app8, taskManager8);
 
         // TaskServer 9
