@@ -7,7 +7,7 @@ const cron_1 = require("cron");
 const debug_1 = __importDefault(require("debug"));
 const runner_1 = __importDefault(require("../tasks/runner"));
 /* Module */
-const debug = debug_1.default('module:task-server');
+const debug = (0, debug_1.default)('module:task-server');
 class TaskServer {
     constructor(app, taskManager) {
         debug('Building task server');
